@@ -12,14 +12,15 @@ public class Main {
             System.out.println("\t2 - Multiplayer");
             System.out.println("\t3 - Rules of the game");
             System.out.println("\t0 - Exit");
-            switch (InputData.CheckInt()) {
+            switch (InputData.checkInt()) {
                 case 1:
-                    new SinglePlayerGame().Start();
+                    new SinglePlayerGame().start();
                     break;
                 case 2:
-                    new Multiplayer().Start();
+                    new Multiplayer().start();
                     break;
-                case 3: Game.Help();
+                case 3:
+                    Game.help();
                     break;
                 case 0:
                     return;
@@ -28,7 +29,5 @@ public class Main {
                     break;
             }
         }
-
-
     }
 }

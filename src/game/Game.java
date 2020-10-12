@@ -1,147 +1,133 @@
 package game;
 
 import java.util.*;
-
 import game.validation.InputData;
 
 abstract public class Game {
-    protected String NamePlayer;
-    //protected char[][] Grid = new char[3][3];
-    protected List<ArrayList<Character>> Grid = new ArrayList();
-    protected static int Moves = 0;
+    protected String namePlayer;
 
-    public Game() {
-    }
+    protected static int moves = 0;
 
+    protected List<ArrayList<Character>> grid = new ArrayList();
+
+    public Game() {}
 
     public String getNamePlayer() {
-        return NamePlayer;
+        return namePlayer;
     }
 
     public void setNamePlayer(String namePlayer) {
-        NamePlayer = namePlayer;
+        this.namePlayer = namePlayer;
     }
 
+    protected abstract void namePlayers();
 
+    protected abstract void start();
 
-
-    protected abstract void NamePlayers();
-
-    protected abstract void Start();
-
-    protected void initializingList(){
-        for(int i=0; i<3; i++){
-            ArrayList <Character> arr1=new ArrayList<>();
-            for(int j=0; j<3;j++){
+    protected void initializingList() {
+        for (int i = 0; i < 3; i++) {
+            ArrayList<Character> arr1 = new ArrayList<>();
+            for (int j = 0; j < 3; j++) {
                 arr1.add('.');
-
             }
-            Grid.add(arr1);
+            grid.add(arr1);
         }
     }
+
     protected void view() {
         System.out.println("\t-------");
-        int i = 1;
-        for (List<Character> GridSymbol : Grid) {
+        int count = 1;
+        for (List<Character> gridSymbol : grid) {
             System.out.print("\t");
-            for (char Symbol : GridSymbol) {
+            for (char Symbol : gridSymbol) {
                 if (Symbol != '.') {
                     System.out.print("|" + "\u001B[32m" + Symbol + "\u001B[0m");
                 } else {
-                    System.out.print("|" + "\u001B[32m" + i + "\u001B[0m");
-
+                    System.out.print("|" + "\u001B[32m" + count + "\u001B[0m");
                 }
-                i++;
+                count++;
             }
             System.out.print("|\n");
         }
         System.out.println("\t-------");
     }
 
-    protected void PlayerTurn(String Name) {
+    protected void playerTurn(String Name) {
         boolean flag = true;
         System.out.println("\t\t" + Name + " walks");
         while (flag) {
             view();
             System.out.print("\tSelect the number where to put the cross:");
-            switch (InputData.CheckInt()) {
+            switch (InputData.checkInt()) {
                 case 1:
-                    if (Grid.get(0).get(0) == '.') {
-                        Grid.get(0).set(0, 'x');
+                    if (grid.get(0).get(0) == '.') {
+                        grid.get(0).set(0, 'x');
                         flag = false;
                     } else {
                         System.out.println("Value not available!");
                     }
                     break;
                 case 2:
-                    if (Grid.get(0).get(1) == '.') {
-                        Grid.get(0).set(1, 'x');
-
+                    if (grid.get(0).get(1) == '.') {
+                        grid.get(0).set(1, 'x');
                         flag = false;
                     } else {
                         System.out.println("Value not available!");
                     }
                     break;
                 case 3:
-                    if (Grid.get(0).get(2) == '.') {
-                        Grid.get(0).set(2, 'x');
+                    if (grid.get(0).get(2) == '.') {
+                        grid.get(0).set(2, 'x');
                         flag = false;
                     } else {
-
                         System.out.println("Value not available!");
                     }
                     break;
                 case 4:
-                    if (Grid.get(1).get(0) == '.') {
-                        Grid.get(1).set(0, 'x');
+                    if (grid.get(1).get(0) == '.') {
+                        grid.get(1).set(0, 'x');
                         flag = false;
                     } else {
-
                         System.out.println("Value not available!");
                     }
                     break;
                 case 5:
-                    if (Grid.get(1).get(1) == '.') {
-                        Grid.get(1).set(1, 'x');
+                    if (grid.get(1).get(1) == '.') {
+                        grid.get(1).set(1, 'x');
                         flag = false;
                     } else {
-
                         System.out.println("Value not available!");
                     }
                     break;
                 case 6:
-                    if (Grid.get(1).get(2) == '.') {
-                        Grid.get(1).set(2, 'x');
+                    if (grid.get(1).get(2) == '.') {
+                        grid.get(1).set(2, 'x');
                         flag = false;
                     } else {
-
                         System.out.println("Value not available!");
                     }
                     break;
                 case 7:
-                    if (Grid.get(2).get(0) == '.') {
-                        Grid.get(2).set(0, 'x');
+                    if (grid.get(2).get(0) == '.') {
+                        grid.get(2).set(0, 'x');
                         flag = false;
                     } else {
-
                         System.out.println("Value not available!");
                     }
                     break;
                 case 8:
-                    if (Grid.get(2).get(1) == '.') {
-                        Grid.get(2).set(1, 'x');
+                    if (grid.get(2).get(1) == '.') {
+                        grid.get(2).set(1, 'x');
                         flag = false;
                     } else {
-
                         System.out.println("Value not available!");
                     }
                     break;
                 case 9:
-                    if (Grid.get(2).get(2) == '.') {
-                        Grid.get(2).set(2, 'x');
+                    if (grid.get(2).get(2) == '.') {
+                        grid.get(2).set(2, 'x');
                         flag = false;
                     } else {
-
                         System.out.println("Value not available!");
                     }
                     break;
@@ -150,45 +136,44 @@ abstract public class Game {
                     break;
             }
         }
-        Moves++;
+        moves++;
     }
 
-    protected boolean Winner() {
+    protected boolean toWin() {
         for (int i = 0; i < 3 - 2; i++) {
             for (int j = 0; j < 3 - 2; j++) {
-                if ((Grid.get(i).get(j) == 'x' && Grid.get(i + 1).get(j + 1) == 'x' && Grid.get(i + 2).get(j + 2) == 'x') ||
-                        (Grid.get(i).get(j) == 'o' && Grid.get(i + 1).get(j + 1) == 'o' && Grid.get(i + 2).get(j + 2) == 'o')) {
+                if ((grid.get(i).get(j) == 'x' && grid.get(i + 1).get(j + 1) == 'x' && grid.get(i + 2).get(j + 2) == 'x') ||
+                        (grid.get(i).get(j) == 'o' && grid.get(i + 1).get(j + 1) == 'o' && grid.get(i + 2).get(j + 2) == 'o')) {
                     return true;
                 }
             }
         }
         for (int i = 3 - 1; i > 1; i--) {
             for (int j = 0; j < 3 - 2; j++) {
-                if ((Grid.get(i).get(j) == 'x' && Grid.get(i - 1).get(j + 1) == 'x' && Grid.get(i - 2).get(j + 2) == 'x') ||
-                        (Grid.get(i).get(j) == 'o' && Grid.get(i - 1).get(j + 1) == 'o' && Grid.get(i - 2).get(j + 2) == 'o')) {
+                if ((grid.get(i).get(j) == 'x' && grid.get(i - 1).get(j + 1) == 'x' && grid.get(i - 2).get(j + 2) == 'x') ||
+                        (grid.get(i).get(j) == 'o' && grid.get(i - 1).get(j + 1) == 'o' && grid.get(i - 2).get(j + 2) == 'o')) {
                     return true;
                 }
             }
         }
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3 - 2; j++) {
-                if ((Grid.get(i).get(j) == 'x' && Grid.get(i).get(j + 1) == 'x' && Grid.get(i).get(j + 2) == 'x') ||
-                        (Grid.get(i).get(j) == 'o' && Grid.get(i).get(j + 1) == 'o' && Grid.get(i).get(j + 2) == 'o'))
+                if ((grid.get(i).get(j) == 'x' && grid.get(i).get(j + 1) == 'x' && grid.get(i).get(j + 2) == 'x') ||
+                        (grid.get(i).get(j) == 'o' && grid.get(i).get(j + 1) == 'o' && grid.get(i).get(j + 2) == 'o'))
                     return true;
             }
         }
-
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3 - 2; j++) {
-                if ((Grid.get(j).get(i) == 'x' && Grid.get(j + 1).get(i) == 'x' && Grid.get(j + 2).get(i) == 'x') ||
-                        (Grid.get(j).get(i) == 'o' && Grid.get(j + 1).get(i) == 'o' && Grid.get(j + 2).get(i) == 'o'))
+                if ((grid.get(j).get(i) == 'x' && grid.get(j + 1).get(i) == 'x' && grid.get(j + 2).get(i) == 'x') ||
+                        (grid.get(j).get(i) == 'o' && grid.get(j + 1).get(i) == 'o' && grid.get(j + 2).get(i) == 'o'))
                     return true;
             }
         }
         return false;
     }
 
-    public static void Help() {
+    public static void help() {
         System.out.println("\n\n\n\t\t\t  The game was written by BSUIR STUDENT Titok Maxim");
         System.out.println("\n\t\t\t\t     Game rules");
         System.out.println("\t\t   Players take turns placing signs on the free squares of the field" +
